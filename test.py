@@ -1,6 +1,4 @@
 import unittest
-from unittest.mock import MagicMock
-from unittest.mock import patch
 from random import randint
 import time
 import pygame
@@ -9,10 +7,10 @@ from setting import *
 from main import Game
 from level import Level
 from user import LevelData, save, load
-from surface import MainPage, LevelMenu, WinPage, LossPage
-from tower import Infantry, Archer, Shield, Fairy, King, Archmage, Manipulator, Miner, Swordsman
-from enemy import Viking, Barbarian, Ogre, Elementals, Masker, Elves, Phantom
-from project import Flag, Campfire, Shell, Coin, SmallCoin, collide
+from surface import MainPage, LevelMenu, WinPage
+from tower import Infantry, Archer, Shield, Archmage, Miner
+from enemy import Viking, Barbarian, Ogre, Elementals, Masker
+from project import Coin
 
 
 class TestAncientWarLevel(unittest.TestCase):
@@ -107,15 +105,6 @@ class TestAncientWarLevel(unittest.TestCase):
         self.level.cards[0].update()
         self.assertTrue(self.level.cards[0].cd_ready)
 
-        # self.assertTrue(self.level.cards[0].cd_ready)
-        # self.level.set_tower(self.level.cards[0].pos)
-        # self.level.set_tower(screen_center)
-        # self.assertFalse(self.level.cards[0].cd_ready)
-        # start_time = time.time()
-        # while time.time() - start_time < self.level.cards[0].cd:
-        #     self.level.load_card()
-        # self.assertTrue(self.level.cards[0].cd_ready)
-
     def test_successful_use_tool(self):
         self.assertFalse(self.level.flag.chosen)
         self.level.load_tool(self.level.flag.pos)
@@ -162,34 +151,6 @@ class TestGameFunctionality(unittest.TestCase):
         self.game.stage.game_loop()
         self.assertEqual(self.game.stage.comment, 'quit')
         self.assertFalse(self.game.stage.running)
-
-    # def test_level_menu(self):
-        # click_event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, pos=(100, 100))
-        #
-        # for b_level in self.game.stage.b_levels:
-        #     b_level.button_down = MagicMock(return_value=True)
-        #
-        # pygame.event.get = MagicMock(return_value=[click_event])
-        # self.game.stage.game_loop()
-        #
-        # self.assertEqual(self.game.stage.comment, '1')
-
-        # self.game.stage = LevelMenu(self.game.window)
-        # click_event1 = pygame.event.Event(pygame.MOUSEBUTTONDOWN, {'pos': self.game.stage.b_levels[0].pos})
-        # pygame.event.post(click_event1)
-        # pygame.time.delay(1000)
-        # click_event2 = pygame.event.Event(pygame.MOUSEBUTTONDOWN, {'pos': self.game.stage.b_ok.pos})
-        # pygame.event.post(click_event2)
-        # # print(len(pygame.event.get()))
-        # self.game.stage.game_loop()
-        # self.assertEqual(self.game.stage.comment, 1)
-        # pygame.event.clear()
-        #
-        # self.game.stage = LevelMenu(self.game.window)
-        # click_event = pygame.event.Event(pygame.MOUSEBUTTONDOWN, {'pos': self.game.stage.b_back.pos})
-        # pygame.event.post(click_event)
-        # self.game.stage.game_loop()
-        # self.assertEqual(self.game.stage.comment, 'back')
 
     def test_load_save_data(self):
         origin_data = load()
